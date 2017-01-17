@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.ITipListMapper" >
+ 
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.TiplistInfo" >
+    <id column="tip_id" property="tipId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="art_id" property="artId" jdbcType="INTEGER" />
+    <result column="tip_info1" property="tipInfo1" jdbcType="VARCHAR" />
+    <result column="tip_info2" property="tipInfo2" jdbcType="VARCHAR" />
+    <result column="tip_info3" property="tipInfo3" jdbcType="VARCHAR" />
+    <result column="tip_info4" property="tipInfo4" jdbcType="VARCHAR" />
+    <result column="tip_info5" property="tipInfo5" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="opera_id" property="operaId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    tip_id, book_id, art_id, tip_info1, tip_info2, tip_info3, tip_info4, tip_info5, time, 
+    opera_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tiplist_info
+    where tip_id = #{tipId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTipListByBookID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tiplist_info
+    where book_id = #{bookid,jdbcType=INTEGER}
+  </select>
+  
+ 
+  
+  
+</mapper>

@@ -1,0 +1,14 @@
+driver=com.mysql.jdbc.Driver
+#url=jdbc:mysql://123.57.55.43:3306/newwx?useUnicode=true&amp;characterEncoding=utf-8
+#username=root
+#password=qianjinba
+
+url=jdbc:mysql://123.57.166.165:3306/Êý¾Ý¿âÃû?useUnicode=true&amp;characterEncoding=utf-8
+#url=jdbc:mysql://123.57.166.165:3306/baseboss?useUnicode=true&amp;characterEncoding=utf-8
+username=
+password=
+
+task.core_pool_size=5
+task.max_pool_size=50
+task.queue_capacity=1000
+task.keep_alive_seconds=60

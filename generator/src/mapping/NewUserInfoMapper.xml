@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.NewUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.NewUserInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="thirdId" property="thirdid" jdbcType="VARCHAR" />
+    <result column="vipLv" property="viplv" jdbcType="INTEGER" />
+    <result column="ossHeadPic" property="ossheadpic" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="SMALLINT" />
+    <result column="vipStartTime" property="vipstarttime" jdbcType="TIMESTAMP" />
+    <result column="vipEndTime" property="vipendtime" jdbcType="TIMESTAMP" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="userStatus" property="userstatus" jdbcType="VARCHAR" />
+    <result column="third" property="third" jdbcType="INTEGER" />
+    <result column="lastLandingTime" property="lastlandingtime" jdbcType="TIMESTAMP" />
+    <result column="createdTime" property="createdtime" jdbcType="TIMESTAMP" />
+    <result column="wxUnionId" property="wxunionid" jdbcType="VARCHAR" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wsh.base.model.NewUserInfo" extends="BaseResultMap" >
+    <result column="nickName" property="nickname" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, thirdId, vipLv, ossHeadPic, mobile, sex, vipStartTime, vipEndTime, password, 
+    userStatus, third, lastLandingTime, createdTime, wxUnionId, openId
+  </sql>
+  <sql id="Blob_Column_List" >
+    nickName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wsh.base.model.NewUserInfo" >
+    insert into userinfo (id, thirdId, vipLv, 
+      ossHeadPic, mobile, sex, 
+      vipStartTime, vipEndTime, password, 
+      userStatus, third, lastLandingTime, 
+      createdTime, wxUnionId, openId, 
+      nickName)
+    values (#{id,jdbcType=INTEGER}, #{thirdid,jdbcType=VARCHAR}, #{viplv,jdbcType=INTEGER}, 
+      #{ossheadpic,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{vipstarttime,jdbcType=TIMESTAMP}, #{vipendtime,jdbcType=TIMESTAMP}, #{password,jdbcType=VARCHAR}, 
+      #{userstatus,jdbcType=VARCHAR}, #{third,jdbcType=INTEGER}, #{lastlandingtime,jdbcType=TIMESTAMP}, 
+      #{createdtime,jdbcType=TIMESTAMP}, #{wxunionid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsh.base.model.NewUserInfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="thirdid != null" >
+        thirdId,
+      </if>
+      <if test="viplv != null" >
+        vipLv,
+      </if>
+      <if test="ossheadpic != null" >
+        ossHeadPic,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="vipstarttime != null" >
+        vipStartTime,
+      </if>
+      <if test="vipendtime != null" >
+        vipEndTime,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userstatus != null" >
+        userStatus,
+      </if>
+      <if test="third != null" >
+        third,
+      </if>
+      <if test="lastlandingtime != null" >
+        lastLandingTime,
+      </if>
+      <if test="createdtime != null" >
+        createdTime,
+      </if>
+      <if test="wxunionid != null" >
+        wxUnionId,
+      </if>
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="nickname != null" >
+        nickName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="thirdid != null" >
+        #{thirdid,jdbcType=VARCHAR},
+      </if>
+      <if test="viplv != null" >
+        #{viplv,jdbcType=INTEGER},
+      </if>
+      <if test="ossheadpic != null" >
+        #{ossheadpic,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="vipstarttime != null" >
+        #{vipstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipendtime != null" >
+        #{vipendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userstatus != null" >
+        #{userstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="third != null" >
+        #{third,jdbcType=INTEGER},
+      </if>
+      <if test="lastlandingtime != null" >
+        #{lastlandingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdtime != null" >
+        #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxunionid != null" >
+        #{wxunionid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.NewUserInfo" >
+    update userinfo
+    <set >
+      <if test="thirdid != null" >
+        thirdId = #{thirdid,jdbcType=VARCHAR},
+      </if>
+      <if test="viplv != null" >
+        vipLv = #{viplv,jdbcType=INTEGER},
+      </if>
+      <if test="ossheadpic != null" >
+        ossHeadPic = #{ossheadpic,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="vipstarttime != null" >
+        vipStartTime = #{vipstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipendtime != null" >
+        vipEndTime = #{vipendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userstatus != null" >
+        userStatus = #{userstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="third != null" >
+        third = #{third,jdbcType=INTEGER},
+      </if>
+      <if test="lastlandingtime != null" >
+        lastLandingTime = #{lastlandingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdtime != null" >
+        createdTime = #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxunionid != null" >
+        wxUnionId = #{wxunionid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickName = #{nickname,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wsh.base.model.NewUserInfo" >
+    update userinfo
+    set thirdId = #{thirdid,jdbcType=VARCHAR},
+      vipLv = #{viplv,jdbcType=INTEGER},
+      ossHeadPic = #{ossheadpic,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      vipStartTime = #{vipstarttime,jdbcType=TIMESTAMP},
+      vipEndTime = #{vipendtime,jdbcType=TIMESTAMP},
+      password = #{password,jdbcType=VARCHAR},
+      userStatus = #{userstatus,jdbcType=VARCHAR},
+      third = #{third,jdbcType=INTEGER},
+      lastLandingTime = #{lastlandingtime,jdbcType=TIMESTAMP},
+      createdTime = #{createdtime,jdbcType=TIMESTAMP},
+      wxUnionId = #{wxunionid,jdbcType=VARCHAR},
+      openId = #{openid,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.NewUserInfo" >
+    update userinfo
+    set thirdId = #{thirdid,jdbcType=VARCHAR},
+      vipLv = #{viplv,jdbcType=INTEGER},
+      ossHeadPic = #{ossheadpic,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      vipStartTime = #{vipstarttime,jdbcType=TIMESTAMP},
+      vipEndTime = #{vipendtime,jdbcType=TIMESTAMP},
+      password = #{password,jdbcType=VARCHAR},
+      userStatus = #{userstatus,jdbcType=VARCHAR},
+      third = #{third,jdbcType=INTEGER},
+      lastLandingTime = #{lastlandingtime,jdbcType=TIMESTAMP},
+      createdTime = #{createdtime,jdbcType=TIMESTAMP},
+      wxUnionId = #{wxunionid,jdbcType=VARCHAR},
+      openId = #{openid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

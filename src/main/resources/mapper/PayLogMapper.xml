@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IUserPayLogMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.PayLog" >
+    <id column="payid" property="payid" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="payDate" property="paydate" jdbcType="TIMESTAMP" />
+    <result column="busType" property="bustype" jdbcType="VARCHAR" />
+    <result column="transMoney" property="transmoney" jdbcType="INTEGER" />
+    <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="Alipay_id" property="alipayId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    payid, user_id, payDate, busType, transMoney, orderno, transaction_id, Alipay_id, 
+    status
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pay_log
+    where payid = #{payid,jdbcType=INTEGER}
+  </select>
+
+
+  
+  <insert id="payForMySelf" parameterType="com.wsh.base.model.PayLog" useGeneratedKeys="true" keyProperty="payid">
+    insert into pay_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     	<if test="payid != null">
+     		payid
+     	</if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="paydate != null" >
+        payDate,
+      </if>
+      <if test="bustype != null" >
+        busType,
+      </if>
+      <if test="transmoney != null" >
+        transMoney,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+      <if test="transactionId != null" >
+        transaction_id,
+      </if>
+      <if test="alipayId != null" >
+        Alipay_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payid != null" >
+        #{payid,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bustype != null" >
+        #{bustype,jdbcType=VARCHAR},
+      </if>
+      <if test="transmoney != null" >
+        #{transmoney,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayId != null" >
+        #{alipayId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.PayLog" >
+    update pay_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="paydate != null" >
+        payDate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bustype != null" >
+        busType = #{bustype,jdbcType=VARCHAR},
+      </if>
+      <if test="transmoney != null" >
+        transMoney = #{transmoney,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayId != null" >
+        Alipay_id = #{alipayId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where payid = #{payid,jdbcType=INTEGER}
+  </update>
+
+
+	<!-- 修改流水记录 的 状态,并增加 微信支付流水号 -->
+	<update id="updateOrderForUser">
+		update pay_log set 
+		status= #{tostatus,jdbcType=INTEGER} ,
+		transaction_id= #{transaction_id,jdbcType=VARCHAR} 
+		where user_id= #{userId,jdbcType=INTEGER} 
+		and orderno=#{orderNo,jdbcType=VARCHAR} 
+		and status= #{fromstatus,jdbcType=INTEGER} 
+	</update>
+
+
+	<!-- 对账单 -->
+	<insert id="insertBill" parameterType="com.wsh.base.model.Bill"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into wx_bill(
+		date,appId,mchId,
+		subMchId,device,transactionId,
+		outTradeNo,openId,tradeType,
+		tradeStatus,bank,feeType,
+		totalFee,luckyMoney,refundNo,
+		outRefundNo,refundFee,refundLuckyMoney,
+		refundType,refundStatus,body,
+		attach,poundage,rate
+		) values (
+		#{date,jdbcType=VARCHAR},#{appId,jdbcType=VARCHAR},#{mchId,jdbcType=VARCHAR},
+		#{subMchId,jdbcType=VARCHAR},#{device,jdbcType=VARCHAR},#{transactionId,jdbcType=VARCHAR},
+		#{outTradeNo,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},#{tradeType,jdbcType=VARCHAR},
+		#{tradeStatus,jdbcType=VARCHAR},#{bank,jdbcType=VARCHAR},#{feeType,jdbcType=VARCHAR},
+		#{totalFee,jdbcType=VARCHAR},#{luckyMoney,jdbcType=VARCHAR},#{refundNo,jdbcType=VARCHAR},
+		#{outRefundNo,jdbcType=VARCHAR},#{refundFee,jdbcType=VARCHAR},#{refundLuckyMoney,jdbcType=VARCHAR},
+		#{refundType,jdbcType=VARCHAR},#{refundStatus,jdbcType=VARCHAR},#{body,jdbcType=VARCHAR},
+		#{attach,jdbcType=VARCHAR},#{poundage,jdbcType=VARCHAR},#{rate,jdbcType=VARCHAR})
+	</insert>
+
+
+	<insert id="betchInsertBill" parameterType="java.util.List">
+	insert into wx_bill(
+	date,appId,mchId,
+	subMchId,device,transactionId,
+	outTradeNo,openId,tradeType,
+	tradeStatus,bank,feeType,
+	totalFee,luckyMoney,refundNo,
+	outRefundNo,refundFee,refundLuckyMoney,
+	refundType,refundStatus,body,
+	attach,poundage,rate
+	) values
+
+	<foreach collection="list" item="item" separator=",">
+		(#{item.date,jdbcType=VARCHAR},#{item.appId,jdbcType=VARCHAR},#{item.mchId,jdbcType=VARCHAR},
+		#{item.subMchId,jdbcType=VARCHAR},#{item.device,jdbcType=VARCHAR},#{item.transactionId,jdbcType=VARCHAR},
+		#{item.outTradeNo,jdbcType=VARCHAR},#{item.openId,jdbcType=VARCHAR},#{item.tradeType,jdbcType=VARCHAR},
+		#{item.tradeStatus,jdbcType=VARCHAR},#{item.bank,jdbcType=VARCHAR},#{item.feeType,jdbcType=VARCHAR},
+		#{item.totalFee,jdbcType=VARCHAR},#{item.luckyMoney,jdbcType=VARCHAR},#{item.refundNo,jdbcType=VARCHAR},
+		#{item.outRefundNo,jdbcType=VARCHAR},#{item.refundFee,jdbcType=VARCHAR},#{item.refundLuckyMoney,jdbcType=VARCHAR},
+		#{item.refundType,jdbcType=VARCHAR},#{item.refundStatus,jdbcType=VARCHAR},#{item.body,jdbcType=VARCHAR},
+		#{item.attach,jdbcType=VARCHAR},#{item.poundage,jdbcType=VARCHAR},#{item.rate,jdbcType=VARCHAR})
+	</foreach>
+</insert>
+
+	<!-- 对账单统计 -->
+	<insert id="insertBillCount" parameterType="com.wsh.base.model.Count">
+	insert into bill_count (transactions,total,refundTotal,luckyMoneyTotal,poundageTotal)
+		  values (
+		 #{transactions,jdbcType=VARCHAR},
+		 #{total,jdbcType=VARCHAR},
+		 #{refundTotal,jdbcType=VARCHAR},
+		 #{luckyMoneyTotal,jdbcType=VARCHAR},
+		 #{poundageTotal,jdbcType=VARCHAR})
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

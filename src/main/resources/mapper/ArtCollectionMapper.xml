@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IArtCollectionMapper">
+	<resultMap id="BaseResultMap" type="com.wsh.base.model.ArtCollection">
+		<id column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="artid" property="artid" jdbcType="INTEGER" />
+		<result column="creadtime" property="creadtime" jdbcType="TIMESTAMP" />
+		<result column="fromType" property="fromType" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="addrPath" property="addrPath" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		cid, userid, artid, creadtime
+	</sql>
+
+	<sql id="exp_Column_List">
+		cid, userid, artid, creadtime,fromType,title 
+	</sql>
+
+	<select id="findUserConlection" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select ac.cid,ac.userid,ac.artid,ac.creadtime,af.art_type as fromType,af.art_title as title 
+		from art_collection ac
+		LEFT JOIN user_info uf
+		on ac.userid=uf.user_id
+		LEFT JOIN article_info af
+		on ac.artid=af.art_id
+		where ac.userid= #{userid,jdbcType=INTEGER}
+		order by ac.creadtime desc
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from art_collection
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from art_collection
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.wsh.base.model.ArtCollection">
+		insert into art_collection (cid, userid, artid,
+		creadtime)
+		values (#{cid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER},
+		#{artid,jdbcType=INTEGER},
+		#{creadtime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.wsh.base.model.ArtCollection">
+		insert into art_collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="artid != null">
+				artid,
+			</if>
+			<if test="creadtime != null">
+				creadtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="artid != null">
+				#{artid,jdbcType=INTEGER},
+			</if>
+			<if test="creadtime != null">
+				#{creadtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.ArtCollection">
+		update art_collection
+		<set>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="artid != null">
+				artid = #{artid,jdbcType=INTEGER},
+			</if>
+			<if test="creadtime != null">
+				creadtime = #{creadtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.wsh.base.model.ArtCollection">
+		update art_collection
+		set userid = #{userid,jdbcType=INTEGER},
+		artid = #{artid,jdbcType=INTEGER},
+		creadtime = #{creadtime,jdbcType=TIMESTAMP}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

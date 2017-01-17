@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IUserIncomeMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.UserIncome" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fromUserId" property="fromuserid" jdbcType="INTEGER" />
+    <result column="toUserID" property="touserid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="income" property="income" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fromUserId, toUserID, type, income, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_income
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_income
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wsh.base.model.UserIncome" >
+    insert into user_income (id, fromUserId, toUserID, 
+      type, income, createtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{fromuserid,jdbcType=INTEGER}, #{touserid,jdbcType=INTEGER}, 
+      #{type,jdbcType=SMALLINT}, #{income,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsh.base.model.UserIncome" useGeneratedKeys="true" keyProperty="id">
+    insert into user_income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fromuserid != null" >
+        fromUserId,
+      </if>
+      <if test="touserid != null" >
+        toUserID,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fromuserid != null" >
+        #{fromuserid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null" >
+        #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.UserIncome" >
+    update user_income
+    <set >
+      <if test="fromuserid != null" >
+        fromUserId = #{fromuserid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null" >
+        toUserID = #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.UserIncome" >
+    update user_income
+    set fromUserId = #{fromuserid,jdbcType=INTEGER},
+      toUserID = #{touserid,jdbcType=INTEGER},
+      type = #{type,jdbcType=SMALLINT},
+      income = #{income,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- 批量插入管理费 -->
+  <insert id="insertManagerCost" useGeneratedKeys="true" parameterType="java.util.List">
+	 insert into user_income (id,fromUserId, toUserID, 
+      type, income, createtime
+      ) values
+	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.id},#{item.fromuserid},#{item.touserid},#{item.type},#{item.income},#{item.createtime})
+	</foreach>
+</insert>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</mapper>

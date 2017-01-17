@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IArticleInfoMapper">
+
+	<resultMap id="BaseResultMap" type="com.wsh.base.model.ArticleInfo">
+		<id column="art_id" property="artId" jdbcType="INTEGER" />
+		<result column="book_id" property="bookId" jdbcType="INTEGER" />
+		<result column="art_title" property="artTitle" jdbcType="VARCHAR" />
+		<result column="art_author" property="artAuthor" jdbcType="VARCHAR" />
+		<result column="art_url" property="artUrl" jdbcType="VARCHAR" />
+		<result column="art_status" property="artStatus" jdbcType="INTEGER" />
+		<result column="art_creatTime" property="artCreattime"
+			jdbcType="TIMESTAMP" />
+		<result column="art_publishTime" property="artPublishtime"
+			jdbcType="TIMESTAMP" />
+		<result column="isfree" property="isfree" jdbcType="BIT" />
+		<result column="price" property="price" jdbcType="INTEGER" />
+		<result column="free_vedio" property="freeVedio" jdbcType="VARCHAR" />
+		<result column="vip_vedio" property="vipVedio" jdbcType="VARCHAR" />
+		<result column="art_intro" property="artIntro" jdbcType="VARCHAR" />
+		<result column="art_type" property="artType" jdbcType="INTEGER" />
+		<result column="art_label" property="artLabel" jdbcType="INTEGER" />
+		<result column="wei_picUrl" property="wei_picUrl" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.wsh.base.model.ArticleInfo"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARBINARY"
+			typeHandler="com.wsh.base.util.ConvertBlobTypeHandler" />
+		<result column="contentFree" property="contentFree" jdbcType="LONGVARBINARY"
+			typeHandler="com.wsh.base.util.ConvertBlobTypeHandler" />	
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		art_id, book_id, art_title, art_author, art_url,
+		art_status, art_creatTime,
+		art_publishTime,
+		isfree, price,free_vedio,
+		vip_vedio, art_intro,art_type,art_label,wei_picUrl
+	</sql>
+
+	<sql id="Blob_Column_List">
+		content,contentFree
+	</sql>
+
+<!-- ===============================书 模块================================================== -->
+	<!-- 查询书的-带上状态1.已发布;type.1.类型书。 -->
+	<select id="getContentInfoByBookID" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from article_info
+		where book_id = #{bookid,jdbcType=INTEGER}
+		and art_status =1 
+		and art_type=1
+	</select>
+
+<select id="checkHasAritcle" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	select count(1) from article_info where book_id = #{bookid,jdbcType=INTEGER} and art_status=1
+</select>
+
+<!-- ===============================维 模块================================================== -->
+	<!-- 维列表 已发布，维类型 -->
+	<select id="getWeiListInfoNoPage" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from article_info 
+		where  art_status =1 
+		and art_type=0 
+		order by art_publishTime desc
+	</select>
+
+	<!-- 根据art_id 获取一条记录 -->
+	<select id="getWeiInfoByArtId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from article_info 
+		where art_id = #{artid,jdbcType=INTEGER} 
+		and art_status =1 
+		and art_type=0
+	</select>
+	
+	<!-- 根据标签 查询 分类 维 信息。状态为：已发布 -->
+	<select id="getWeiListInfoByLabelType" resultMap="ResultMapWithBLOBs">
+	select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+	from article_info 
+	where art_type = 0  
+	and art_status = 1 
+	and art_label = #{type,jdbcType=INTEGER}  
+	order by art_publishTime desc
+	</select>
+	<!-- ============================================================ -->
+	
+	<select id="getOneInfoByArtId" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from article_info 
+		where art_id = #{artid,jdbcType=INTEGER} 
+	</select>
+	
+
+</mapper>

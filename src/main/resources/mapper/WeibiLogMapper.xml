@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IWBInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.WeibiLog" >
+    <id column="weib_id" property="weibId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="sp_weibi" property="spWeibi" jdbcType="INTEGER" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="INTEGER" />
+    <result column="expend" property="expend" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="channel" property="channel" jdbcType="INTEGER" />
+    <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    weib_id, user_id, sp_weibi, intro, income, expend, createtime, channel,orderno
+  </sql>
+  
+  
+  <!-- ===================================================================================================== -->
+  <select id="getWBLogInfoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from weibi_log
+    where user_id = #{userid,jdbcType=INTEGER}
+    order by createtime desc
+  </select>
+  
+  <select id="toSearchMyWb" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  	select sp_weibi from weibi_log 
+  	where  user_id = #{userid,jdbcType=INTEGER} 
+  	order by createtime desc 
+  	LIMIT 1
+  </select>
+  
+	
+	<!-- 查询某种类型的收益总数 -->
+	<select id="findAllWbIncomeByUid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select SUM(income) from weibi_log 
+		where user_id=#{userid,jdbcType=INTEGER} 
+		and channel= #{chanel,jdbcType=INTEGER} 
+		
+	</select> 
+  
+  	<select id="findAllPopWbByidAndTime" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select SUM(income) from weibi_log 
+		where user_id=#{userid,jdbcType=INTEGER} 
+		and channel= #{chanel,jdbcType=INTEGER} 
+		<if test="dateNum != null ">
+		<![CDATA[and datediff(NOW(),createtime)<=  #{dateNum,jdbcType=INTEGER}  ]]>
+		</if>
+	</select> 
+  
+    <!-- ===================================================================================================== -->
+  
+  
+  
+  <insert id="instWbLogForUser" parameterType="com.wsh.base.model.WeibiLog" useGeneratedKeys="true" keyProperty="weibId" >
+    insert into weibi_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="weibId != null" >
+        weib_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="spWeibi != null" >
+        sp_weibi,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="expend != null" >
+        expend,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="weibId != null" >
+        #{weibId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="spWeibi != null" >
+        #{spWeibi,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=INTEGER},
+      </if>
+      <if test="expend != null" >
+        #{expend,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.WeibiLog" >
+    update weibi_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="spWeibi != null" >
+        sp_weibi = #{spWeibi,jdbcType=INTEGER},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=INTEGER},
+      </if>
+      <if test="expend != null" >
+        expend = #{expend,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=VARCHAR},
+      </if>
+      
+    </set>
+    where weib_id = #{weibId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

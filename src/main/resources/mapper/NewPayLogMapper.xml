@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.INewPayLogMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.NewPayLog" >
+    <id column="payId" property="payid" jdbcType="INTEGER" />
+    <result column="odSystemNum" property="odsystemnum" jdbcType="VARCHAR" />
+    <result column="transType" property="transtype" jdbcType="VARCHAR" />
+    <result column="payChannel" property="paychannel" jdbcType="VARCHAR" />
+    <result column="alipayNum" property="alipaynum" jdbcType="VARCHAR" />
+    <result column="weChatPayNum" property="wechatpaynum" jdbcType="VARCHAR" />
+    <result column="myWalletNum" property="mywalletnum" jdbcType="VARCHAR" />
+    <result column="odStatus" property="odstatus" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="compPayTime" property="comppaytime" jdbcType="TIMESTAMP" />
+    <result column="transMoney" property="transmoney" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    payId, odSystemNum, transType, payChannel, alipayNum, weChatPayNum, myWalletNum, 
+    odStatus, createTime, compPayTime, transMoney
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from paylog
+    where payId = #{payid,jdbcType=INTEGER}
+  </select>
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from paylog
+    where payId = #{payid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.wsh.base.model.NewPayLog" >
+    insert into paylog (payId, odSystemNum, transType, 
+      payChannel, alipayNum, weChatPayNum, 
+      myWalletNum, odStatus, createTime, 
+      compPayTime, transMoney)
+    values (#{payid,jdbcType=INTEGER}, #{odsystemnum,jdbcType=VARCHAR}, #{transtype,jdbcType=VARCHAR}, 
+      #{paychannel,jdbcType=VARCHAR}, #{alipaynum,jdbcType=VARCHAR}, #{wechatpaynum,jdbcType=VARCHAR}, 
+      #{mywalletnum,jdbcType=VARCHAR}, #{odstatus,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{comppaytime,jdbcType=TIMESTAMP}, #{transmoney,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.wsh.base.model.NewPayLog" >
+    insert into paylog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="payid != null" >
+        payId,
+      </if>
+      <if test="odsystemnum != null" >
+        odSystemNum,
+      </if>
+      <if test="transtype != null" >
+        transType,
+      </if>
+      <if test="paychannel != null" >
+        payChannel,
+      </if>
+      <if test="alipaynum != null" >
+        alipayNum,
+      </if>
+      <if test="wechatpaynum != null" >
+        weChatPayNum,
+      </if>
+      <if test="mywalletnum != null" >
+        myWalletNum,
+      </if>
+      <if test="odstatus != null" >
+        odStatus,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="comppaytime != null" >
+        compPayTime,
+      </if>
+      <if test="transmoney != null" >
+        transMoney,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payid != null" >
+        #{payid,jdbcType=INTEGER},
+      </if>
+      <if test="odsystemnum != null" >
+        #{odsystemnum,jdbcType=VARCHAR},
+      </if>
+      <if test="transtype != null" >
+        #{transtype,jdbcType=VARCHAR},
+      </if>
+      <if test="paychannel != null" >
+        #{paychannel,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaynum != null" >
+        #{alipaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpaynum != null" >
+        #{wechatpaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="mywalletnum != null" >
+        #{mywalletnum,jdbcType=VARCHAR},
+      </if>
+      <if test="odstatus != null" >
+        #{odstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comppaytime != null" >
+        #{comppaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transmoney != null" >
+        #{transmoney,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.NewPayLog" >
+    update paylog
+    <set >
+      <if test="odsystemnum != null" >
+        odSystemNum = #{odsystemnum,jdbcType=VARCHAR},
+      </if>
+      <if test="transtype != null" >
+        transType = #{transtype,jdbcType=VARCHAR},
+      </if>
+      <if test="paychannel != null" >
+        payChannel = #{paychannel,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaynum != null" >
+        alipayNum = #{alipaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpaynum != null" >
+        weChatPayNum = #{wechatpaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="mywalletnum != null" >
+        myWalletNum = #{mywalletnum,jdbcType=VARCHAR},
+      </if>
+      <if test="odstatus != null" >
+        odStatus = #{odstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comppaytime != null" >
+        compPayTime = #{comppaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transmoney != null" >
+        transMoney = #{transmoney,jdbcType=INTEGER},
+      </if>
+    </set>
+    where payId = #{payid,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- 根据本地订单修改数据 -->
+   <update id="updatePayLogStatus" parameterType="com.wsh.base.model.NewPayLog" >
+    update paylog 
+    <set >
+      <if test="transtype != null" >
+        transType = #{transtype,jdbcType=VARCHAR},
+      </if>
+      <if test="paychannel != null" >
+        payChannel = #{paychannel,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaynum != null" >
+        alipayNum = #{alipaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpaynum != null" >
+        weChatPayNum = #{wechatpaynum,jdbcType=VARCHAR},
+      </if>
+      <if test="mywalletnum != null" >
+        myWalletNum = #{mywalletnum,jdbcType=VARCHAR},
+      </if>
+      <if test="odstatus != null" >
+        odStatus = #{odstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comppaytime != null" >
+        compPayTime = #{comppaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transmoney != null" >
+        transMoney = #{transmoney,jdbcType=INTEGER},
+      </if>
+    </set>
+    where odSystemNum = #{odsystemnum,jdbcType=VARCHAR} 
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.NewPayLog" >
+    update paylog
+    set odSystemNum = #{odsystemnum,jdbcType=VARCHAR},
+      transType = #{transtype,jdbcType=VARCHAR},
+      payChannel = #{paychannel,jdbcType=VARCHAR},
+      alipayNum = #{alipaynum,jdbcType=VARCHAR},
+      weChatPayNum = #{wechatpaynum,jdbcType=VARCHAR},
+      myWalletNum = #{mywalletnum,jdbcType=VARCHAR},
+      odStatus = #{odstatus,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      compPayTime = #{comppaytime,jdbcType=TIMESTAMP},
+      transMoney = #{transmoney,jdbcType=INTEGER}
+    where payId = #{payid,jdbcType=INTEGER}
+  </update>
+</mapper>

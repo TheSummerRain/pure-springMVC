@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IUserCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.UserComment" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="artid" property="artid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="headpic" property="headpic" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="isNice" property="isnice" jdbcType="BIT" />
+    <result column="ctext" property="ctext" jdbcType="VARCHAR" />
+    <result column="countpra" property="countpra" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="BLOB" typeHandler="com.wsh.base.util.ConvertBlobTypeHandler" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    cid, artid, userid, headpic, createtime, isNice, ctext, countpra,nickname
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="com.wsh.base.model.UserComment" >
+    insert into user_comment (cid, artid, userid, 
+      headpic, createtime, isNice, 
+      ctext, countpra, nickname
+      )
+    values (#{cid,jdbcType=INTEGER}, #{artid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{headpic,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{isnice,jdbcType=BIT}, 
+      #{ctext,jdbcType=VARCHAR}, #{countpra,jdbcType=INTEGER}, #{nickname,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsh.base.model.UserComment" useGeneratedKeys="true" keyProperty="cid">
+    insert into user_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="artid != null" >
+        artid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="headpic != null" >
+        headpic,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="isnice != null" >
+        isNice,
+      </if>
+      <if test="ctext != null" >
+        ctext,
+      </if>
+      <if test="countpra != null" >
+        countpra,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="artid != null" >
+        #{artid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="headpic != null" >
+        #{headpic,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isnice != null" >
+        #{isnice,jdbcType=BIT},
+      </if>
+      <if test="ctext != null" >
+        #{ctext,jdbcType=VARCHAR},
+      </if>
+      <if test="countpra != null" >
+        #{countpra,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.UserComment" >
+    update user_comment
+    <set >
+      <if test="artid != null" >
+        artid = #{artid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="headpic != null" >
+        headpic = #{headpic,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isnice != null" >
+        isNice = #{isnice,jdbcType=BIT},
+      </if>
+      <if test="ctext != null" >
+        ctext = #{ctext,jdbcType=VARCHAR},
+      </if>
+      <if test="countpra != null" >
+        countpra = #{countpra,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=BLOB},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.UserComment" >
+    update user_comment
+    set artid = #{artid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      headpic = #{headpic,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      isNice = #{isnice,jdbcType=BIT},
+      ctext = #{ctext,jdbcType=VARCHAR},
+      countpra = #{countpra,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

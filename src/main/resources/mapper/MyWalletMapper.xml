@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.IMyWalletMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.MyWallet" >
+    <id column="walId" property="walid" jdbcType="INTEGER" />
+    <result column="fromUserId" property="fromuserid" jdbcType="INTEGER" />
+    <result column="toUserId" property="touserid" jdbcType="INTEGER" />
+    <result column="cmType" property="cmtype" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="epType" property="eptype" jdbcType="VARCHAR" />
+    <result column="epChannel" property="epchannel" jdbcType="VARCHAR" />
+    <result column="epOrderNo" property="eporderno" jdbcType="VARCHAR" />
+    <result column="channelTransNo" property="channeltransno" jdbcType="VARCHAR" />
+    <result column="sourceDes" property="sourcedes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    walId, fromUserId, toUserId, cmType, money, createTime, epType, epChannel, epOrderNo, 
+    channelTransNo, sourceDes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mywallet
+    where walId = #{walid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mywallet
+    where walId = #{walid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wsh.base.model.MyWallet" >
+    insert into mywallet (walId, fromUserId, toUserId, 
+      cmType, money, createTime, 
+      epType, epChannel, epOrderNo, 
+      channelTransNo, sourceDes)
+    values (#{walid,jdbcType=INTEGER}, #{fromuserid,jdbcType=INTEGER}, #{touserid,jdbcType=INTEGER}, 
+      #{cmtype,jdbcType=VARCHAR}, #{money,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{eptype,jdbcType=VARCHAR}, #{epchannel,jdbcType=VARCHAR}, #{eporderno,jdbcType=VARCHAR}, 
+      #{channeltransno,jdbcType=VARCHAR}, #{sourcedes,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.wsh.base.model.MyWallet" >
+    insert into mywallet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="walid != null" >
+        walId,
+      </if>
+      <if test="fromuserid != null" >
+        fromUserId,
+      </if>
+      <if test="touserid != null" >
+        toUserId,
+      </if>
+      <if test="cmtype != null" >
+        cmType,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="eptype != null" >
+        epType,
+      </if>
+      <if test="epchannel != null" >
+        epChannel,
+      </if>
+      <if test="eporderno != null" >
+        epOrderNo,
+      </if>
+      <if test="channeltransno != null" >
+        channelTransNo,
+      </if>
+      <if test="sourcedes != null" >
+        sourceDes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="walid != null" >
+        #{walid,jdbcType=INTEGER},
+      </if>
+      <if test="fromuserid != null" >
+        #{fromuserid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null" >
+        #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="cmtype != null" >
+        #{cmtype,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eptype != null" >
+        #{eptype,jdbcType=VARCHAR},
+      </if>
+      <if test="epchannel != null" >
+        #{epchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="eporderno != null" >
+        #{eporderno,jdbcType=VARCHAR},
+      </if>
+      <if test="channeltransno != null" >
+        #{channeltransno,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcedes != null" >
+        #{sourcedes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.MyWallet" >
+    update mywallet
+    <set >
+      <if test="fromuserid != null" >
+        fromUserId = #{fromuserid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null" >
+        toUserId = #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="cmtype != null" >
+        cmType = #{cmtype,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eptype != null" >
+        epType = #{eptype,jdbcType=VARCHAR},
+      </if>
+      <if test="epchannel != null" >
+        epChannel = #{epchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="eporderno != null" >
+        epOrderNo = #{eporderno,jdbcType=VARCHAR},
+      </if>
+      <if test="channeltransno != null" >
+        channelTransNo = #{channeltransno,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcedes != null" >
+        sourceDes = #{sourcedes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where walId = #{walid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.MyWallet" >
+    update mywallet
+    set fromUserId = #{fromuserid,jdbcType=INTEGER},
+      toUserId = #{touserid,jdbcType=INTEGER},
+      cmType = #{cmtype,jdbcType=VARCHAR},
+      money = #{money,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      epType = #{eptype,jdbcType=VARCHAR},
+      epChannel = #{epchannel,jdbcType=VARCHAR},
+      epOrderNo = #{eporderno,jdbcType=VARCHAR},
+      channelTransNo = #{channeltransno,jdbcType=VARCHAR},
+      sourceDes = #{sourcedes,jdbcType=VARCHAR}
+    where walId = #{walid,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+  
+    <!-- 批量插入管理费 -->
+  <insert id="insertMyWalletList" useGeneratedKeys="true" parameterType="java.util.List">
+	 insert into mywallet (walId,fromUserId, toUserId, 
+      cmType, money, createTime,sourceDes 
+      ) values
+	<foreach collection="list" item="item" index="index" separator="," >
+		(#{item.walid},#{item.fromuserid},#{item.touserid},#{item.cmtype},#{item.money},#{item.createtime},#{item.sourcedes})
+	</foreach>
+</insert>
+  
+  
+  
+  
+  
+  
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsh.base.mapperdao.GeneralizeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wsh.base.model.GeneralizeInfo" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="pId" property="pid" jdbcType="INTEGER" />
+    <result column="isElchee" property="iselchee" jdbcType="BIT" />
+    <result column="isAgent" property="isagent" jdbcType="BIT" />
+    <result column="pAgentId" property="pagentid" jdbcType="INTEGER" />
+    <result column="agentStatus" property="agentstatus" jdbcType="SMALLINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userid, pId, isElchee, isAgent, pAgentId, agentStatus, createTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from generalizeinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from generalizeinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wsh.base.model.GeneralizeInfo" >
+    insert into generalizeinfo (userid, pId, isElchee, 
+      isAgent, pAgentId, agentStatus, 
+      createTime)
+    values (#{userid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{iselchee,jdbcType=BIT}, 
+      #{isagent,jdbcType=BIT}, #{pagentid,jdbcType=INTEGER}, #{agentstatus,jdbcType=SMALLINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsh.base.model.GeneralizeInfo" >
+    insert into generalizeinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="pid != null" >
+        pId,
+      </if>
+      <if test="iselchee != null" >
+        isElchee,
+      </if>
+      <if test="isagent != null" >
+        isAgent,
+      </if>
+      <if test="pagentid != null" >
+        pAgentId,
+      </if>
+      <if test="agentstatus != null" >
+        agentStatus,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="iselchee != null" >
+        #{iselchee,jdbcType=BIT},
+      </if>
+      <if test="isagent != null" >
+        #{isagent,jdbcType=BIT},
+      </if>
+      <if test="pagentid != null" >
+        #{pagentid,jdbcType=INTEGER},
+      </if>
+      <if test="agentstatus != null" >
+        #{agentstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsh.base.model.GeneralizeInfo" >
+    update generalizeinfo
+    <set >
+      <if test="pid != null" >
+        pId = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="iselchee != null" >
+        isElchee = #{iselchee,jdbcType=BIT},
+      </if>
+      <if test="isagent != null" >
+        isAgent = #{isagent,jdbcType=BIT},
+      </if>
+      <if test="pagentid != null" >
+        pAgentId = #{pagentid,jdbcType=INTEGER},
+      </if>
+      <if test="agentstatus != null" >
+        agentStatus = #{agentstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsh.base.model.GeneralizeInfo" >
+    update generalizeinfo
+    set pId = #{pid,jdbcType=INTEGER},
+      isElchee = #{iselchee,jdbcType=BIT},
+      isAgent = #{isagent,jdbcType=BIT},
+      pAgentId = #{pagentid,jdbcType=INTEGER},
+      agentStatus = #{agentstatus,jdbcType=SMALLINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
